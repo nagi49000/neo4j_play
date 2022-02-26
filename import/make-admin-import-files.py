@@ -1,6 +1,7 @@
 import csv
 import os
 import tarfile
+import zipfile
 
 
 class TarGzWriter:
@@ -44,9 +45,9 @@ class TarGzWriter:
 
 def make_admin_import_files():
     this_dir = os.path.abspath(os.path.dirname(__file__))
-    source_file = os.path.join(this_dir, "data.csv.tar.gz")
-    with tarfile.open(source_file, "r") as tarf:
-        for member in tarf.getmembers():  # should be a length 1 array
+    source_file = os.path.join(this_dir, "data.csv.zip")
+    with zipfile.ZipFile(source_file, "r") as z:
+        for member in z.namelist():  # should be a length 1 array
             with open("import-source-nodes-headers.csv", "wt") as f:
                 f.write("userId:ID,userName")
             with open("import-target-nodes-headers.csv", "wt") as f:
@@ -57,7 +58,7 @@ def make_admin_import_files():
             target_node_writer = TarGzWriter("import-target-nodes")  # may contain some nodes from source_node_writer
             relationship_writer = TarGzWriter("import-relationships")
 
-            with tarf.extractfile(member) as f:
+            with z.open(member, "r") as f:
                 l = f.readline().decode()
                 not_first_row = False
                 while l:  # loop over lines in file
