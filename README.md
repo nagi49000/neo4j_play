@@ -12,9 +12,7 @@ Data and import cypher are mounted in /import . On
 ```
 docker-compose up
 ```
-a neo4j server will be available, with an empty database, with default auth.
-
-To import the twitter friends data, one can exec into the running shell
+a neo4j server will be available, with an empty database, with default auth. To import the twitter friends data, one can exec into the running shell
 ```
 docker exec -it neo4j_play_neo4j_1 /bin/bash
 ```
