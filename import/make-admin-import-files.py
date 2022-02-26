@@ -90,4 +90,5 @@ def make_admin_import_files():
             relationship_writer.close()
 
 if __name__ == "__main__":
+    # tested on Python 3.7.6
     make_admin_import_files()
