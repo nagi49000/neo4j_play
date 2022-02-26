@@ -14,8 +14,6 @@ docker-compose up
 ```
 a neo4j server will be available, with an empty database, with default auth.
 
-Once the server is up, you can navigate to the neo4j browser on http://localhost:7474/browser/ from your favourite web browser. From there, you can connect to the default database with username "neo4j" and password "neo4j". The browser will ask you to change password (the docker-compose environment assumes this will be "neo").
-
 To import the twitter friends data, one can exec into the running shell
 ```
 docker exec -it neo4j_play_neo4j_1 /bin/bash
@@ -50,7 +48,7 @@ The database may need to be restarted for the changes to be picked up, which can
 
 ## Checking data is loaded
 
-The neo4j browser will be available at http://localhost:7474/ with username and password both "neo4j". After import, the data will be available to see in the neo4j browser. As a simple example to check import, one can run the cypher query
+With the server up, the neo4j browser will be available at http://localhost:7474/ with username and password both "neo4j". After import, the data will be available to see in the neo4j browser. As a simple example to check import, one can run the cypher query
 ```
 MATCH(n) RETURN COUNT(n);
 ```
