@@ -24,11 +24,6 @@ cd into /import, and run
 ```
 cypher-shell -f import_data.cypher
 ```
-After import, the data will be available to see in the neo4j browser. As a simple example to check import, one can run the cypher query
-```
-MATCH(n) RETURN COUNT(n);
-```
-in the top bar of the browser.
 
 ## Loading data into a non-existent or switched off database
 
@@ -49,7 +44,11 @@ cd into /import, and run, in the /import directory (!this shell script will dele
 ```
 neo4j-admin-import.sh
 ```
-The database may need to be restarted for the changes to be picked up, which can be performed by restarting the docker container. After import, the data will be available to see in the neo4j browser. As a simple example to check import, one can run the cypher query
+The database may need to be restarted for the changes to be picked up, which can be performed by restarting the docker container.
+
+## Checking data is loaded
+
+The neo4j browser will be available at http://localhost:7474/ with username and password both "neo4j". After import, the data will be available to see in the neo4j browser. As a simple example to check import, one can run the cypher query
 ```
 MATCH(n) RETURN COUNT(n);
 ```
