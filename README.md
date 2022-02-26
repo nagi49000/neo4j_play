@@ -47,8 +47,9 @@ docker exec -it neo4j_play_neo4j_1 /bin/bash
 ```
 cd into /import, and run, in the /import directory
 ```
-neo4j-admin import --database=neo4j --skip-duplicate-nodes
-    --nodes=User=import-source-nodes-headers.csv,import-source-nodes.*.csv.tar.gz
-    --nodes=User=import-target-nodes-headers.csv,import-target-nodes.*.csv.tar.gz
-    --relationships=HAS_FRIEND=import-relationships.csv,import-relationships.*.csv.tar.gz
+neo4j-admin-import.sh
+```
+This will create data in a new database called kaggle, which can be accessed in the neo4j browser using
+```
+:use kaggle
 ```
