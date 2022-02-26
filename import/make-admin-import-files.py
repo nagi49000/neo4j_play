@@ -7,8 +7,10 @@ import zipfile
 class TarGzWriter:
     def __init__(self, root_filename, n_row_max=1000000, filename_int_pad=5):
         """ root_filename - str - root of the ingest files
-            n_row_max - int
-            filename_int_pad - int
+            n_row_max - int - max number of rows in a tar.gz file before starting a new file
+            filename_int_pad - int - formatting for integer in tar.gz filenames
+
+            Object for writing rows of data to a partitioned set of tar.gz files
         """
         self._root_filename = root_filename
         self._n_row_max = n_row_max
@@ -19,13 +21,17 @@ class TarGzWriter:
         self._file = open(self._get_filename(), "wt")
 
     def add_row(self, row_as_list):
-        """ row_as_list - list<str>
+        """ row_as_list - list<str> - csv row to write to file
+
+            adds the row of data to file as a csv row
         """
         self._refresh_file()
         self._file.write(','.join(row_as_list) + "\n")
         self._row_ctr += 1
 
     def close(self):
+        """ be sure to call this after all processing, otherwise there may be data loss
+        """
         self._file.close()
         with tarfile.open(f"{self._file.name}.tar.gz", "w:gz") as tar:
             tar.add(self._file.name)
@@ -44,6 +50,9 @@ class TarGzWriter:
 
 
 def make_admin_import_files():
+    """ takes a zip file of twitter data, and processes it to a bunch of tar.gz
+        files that can be fed to neo4j-admin import
+    """
     this_dir = os.path.abspath(os.path.dirname(__file__))
     source_file = os.path.join(this_dir, "data.csv.zip")
     with zipfile.ZipFile(source_file, "r") as z:
