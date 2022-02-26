@@ -6,7 +6,7 @@ Neo4j docker-compose set up from https://medium.com/@thibaut.deveraux/how-to-ins
 
 ## Loading data into an active database
 
-This uses [LOAD CSV](https://neo4j.com/docs/cypher-manual/current/clauses/load-csv/)
+This uses [LOAD CSV](https://neo4j.com/docs/cypher-manual/current/clauses/load-csv/). The bespoke code for this method is all in import_data.cypher.
 
 Data and import cypher are mounted in /import . On
 ```
@@ -27,7 +27,9 @@ cypher-shell -f import_data.cypher
 
 ## Loading data into a non-existent or switched off database
 
-This uses [neo4j-admin-import](https://neo4j.com/docs/operations-manual/current/tutorial/neo4j-admin-import/). The files need to be prepared for import. In the import directory, there is a python script for this, which can be run with
+This uses [neo4j-admin-import](https://neo4j.com/docs/operations-manual/current/tutorial/neo4j-admin-import/). The bespoke code for this method is in make-admin-import-files.py and neo4j-admin-import.sh.
+
+The files need to be prepared for import. In the import directory, there is a python script for this, which can be run with
 ```
 python make-admin-import-files.py
 ```
