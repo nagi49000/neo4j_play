@@ -4,7 +4,7 @@ import tarfile
 
 
 class TarGzWriter:
-    def __init__(self, root_filename, n_row_max=7000, filename_int_pad=5):
+    def __init__(self, root_filename, n_row_max=1000000, filename_int_pad=5):
         """ root_filename - str - root of the ingest files
             n_row_max - int
             filename_int_pad - int
@@ -21,16 +21,18 @@ class TarGzWriter:
         """ row_as_list - list<str>
         """
         self._refresh_file()
-        self._file.write(','.join(row_as_list))
+        self._file.write(','.join(row_as_list) + "\n")
         self._row_ctr += 1
 
     def close(self):
         self._file.close()
         with tarfile.open(f"{self._file.name}.tar.gz", "w:gz") as tar:
             tar.add(self._file.name)
+        os.remove(self._file.name)
+        self._file = None
 
     def _get_filename(self):
-        return f"{self._root_filename}_{str(self._file_ctr).zfill(self._filename_int_pad)}.txt"
+        return f"{self._root_filename}_{str(self._file_ctr).zfill(self._filename_int_pad)}.csv"
 
     def _refresh_file(self):
         if self._row_ctr > self._n_row_max:
@@ -45,11 +47,17 @@ def make_admin_import_files():
     source_file = os.path.join(this_dir, "data.csv.tar.gz")
     with tarfile.open(source_file, "r") as tarf:
         for member in tarf.getmembers():  # should be a length 1 array
-            with tarf.extractfile(member) as f:
-                source_node_writer = TarGzWriter("import_source_nodes")
-                target_node_writer = TarGzWriter("import_target_nodes")  # may contain some nodes from source_node_writer
-                relationship_writer = TarGzWriter("import_relationships")
+            with open("import-source-nodes-headers.csv", "wt") as f:
+                f.write("userId:ID,userName")
+            with open("import-target-nodes-headers.csv", "wt") as f:
+                f.write("userId:ID")
+            with open("import-relationships-headers.csv", "wt") as f:
+                f.write(":START_ID,:END_ID")
+            source_node_writer = TarGzWriter("import-source-nodes")
+            target_node_writer = TarGzWriter("import-target-nodes")  # may contain some nodes from source_node_writer
+            relationship_writer = TarGzWriter("import-relationships")
 
+            with tarf.extractfile(member) as f:
                 l = f.readline().decode()
                 not_first_row = False
                 while l:  # loop over lines in file
@@ -67,9 +75,9 @@ def make_admin_import_files():
                     not_first_row = True
                     l = f.readline().decode()
 
-                source_node_writer.close()
-                target_node_writer.close()
-                relationship_writer.close()
+            source_node_writer.close()
+            target_node_writer.close()
+            relationship_writer.close()
 
 if __name__ == "__main__":
     make_admin_import_files()
