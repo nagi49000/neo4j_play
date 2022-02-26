@@ -45,7 +45,7 @@ To import the twitter friends data, one can exec into the running shell
 ```
 docker exec -it neo4j_play_neo4j_1 /bin/bash
 ```
-cd into /import, and run, in the /import directory
+cd into /import, and run, in the /import directory (!this shell script will delete any existing database data!)
 ```
 neo4j-admin-import.sh
 ```
