@@ -132,3 +132,4 @@ dmypy.json
 # neo4j generated stuff
 import/import*csv*
 import/import.report
+data/
