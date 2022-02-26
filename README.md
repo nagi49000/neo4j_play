@@ -49,7 +49,4 @@ cd into /import, and run, in the /import directory
 ```
 neo4j-admin-import.sh
 ```
-This will create data in a new database called kaggle, which can be accessed in the neo4j browser using
-```
-:use kaggle
-```
+The database may need to be restarted for the changes to be picked up.

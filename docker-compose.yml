@@ -21,7 +21,5 @@ services:
       - NEO4J_dbms_memory_heap_max__size=4G
       # - NEO4J_USERNAME=neo4j
       # - NEO4J_PASSWORD=neo4j
-      # hack on community edition to pick up imported database
-      - NEO4J_dbms_default__database=kaggle
       # hack on disabling username/password for demo purposes
       - NEO4J_dbms_security_auth__enabled=false
