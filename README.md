@@ -49,4 +49,8 @@ cd into /import, and run, in the /import directory (!this shell script will dele
 ```
 neo4j-admin-import.sh
 ```
-The database may need to be restarted for the changes to be picked up.
+The database may need to be restarted for the changes to be picked up, which can be performed by restarting the docker container. After import, the data will be available to see in the neo4j browser. As a simple example to check import, one can run the cypher query
+```
+MATCH(n) RETURN COUNT(n);
+```
+in the top bar of the browser.
