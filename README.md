@@ -4,7 +4,7 @@ Data from https://www.kaggle.com/hwassner/TwitterFriends?select=data.csv
 
 Neo4j docker-compose set up from https://medium.com/@thibaut.deveraux/how-to-install-neo4j-with-docker-compose-36e3ba939af0
 
-## loading data into an active database
+## Loading data into an active database
 
 Data and import cypher are mounted in /import . On
 ```
@@ -18,7 +18,7 @@ To import the twitter friends data, one can exec into the running shell
 ```
 docker exec -it neo4j_play_neo4j_1 /bin/bash
 ```
-cd into /import, and run
+cd into /import, and run (which, under the hood, uses neo4j's LOAD CSV)
 ```
 cypher-shell -f import_data.cypher
 ```

@@ -2,6 +2,7 @@ version: '3'
 
 services:
   neo4j:
+    # tested on neo4j version 4.4.4
     image: neo4j:latest
     restart: unless-stopped
     ports:
@@ -13,7 +14,7 @@ services:
       - ./import:/import
       - ./logs:/logs
       - ./plugins:/plugins
-    environment: 
+    environment:
       # Raise memory limits
       - NEO4J_dbms_memory_pagecache_size=1G
       - NEO4J_dbms.memory.heap.initial_size=4G
