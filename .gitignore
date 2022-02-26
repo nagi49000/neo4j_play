@@ -128,3 +128,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# neo4j generated stuff
+import/import*csv*
+import/import.report
+data/

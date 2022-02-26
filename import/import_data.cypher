@@ -1,5 +1,5 @@
 // ID should be unique
-CREATE CONSTRAINT user_id_unique ON (n:User) ASSERT n.userId IS UNIQUE;
+CREATE CONSTRAINT user_id_unique IF NOT EXISTS ON (n:User) ASSERT n.userId IS UNIQUE;
 USING PERIODIC COMMIT 1
 LOAD CSV WITH HEADERS FROM 'file:///data.csv.zip' AS row
 // create node from info in first few columns
